@@ -18,6 +18,12 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+    - name: Remove Zone.Identifier
+      run: |
+        dir /s /b | where {$_.endswith(":Zone.Identifier")} | foreach { Remove-Item $_ }
+      shell: powershell
+
+
     - name: Checkout code
       uses: actions/checkout@v4
 
