@@ -18,10 +18,11 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Disable Zone.Identifier generation
+    - name: Configure Git to ignore Zone.Identifier
       run: |
-        New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Policies\Attachments" -Name "SaveZoneInformation" -Value 1 -PropertyType DWord -Force
-      shell: pwsh
+        git config --global core.safecrlf false
+        git config --global core.autocrlf false
+      shell: cmd
 
     - name: Checkout code
       uses: actions/checkout@v4
