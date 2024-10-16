@@ -1,3 +1,13 @@
+name: flake8
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
   flake8:
     strategy:
@@ -31,3 +41,4 @@ jobs:
       run: |
         flake8 .
       shell: cmd
+
