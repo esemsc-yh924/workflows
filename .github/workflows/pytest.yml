@@ -1,0 +1,40 @@
+name: flake8
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  flake8:
+    strategy:
+      matrix:
+        os: [windows-latest]
+        python-version: [3.11, 3.12]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout code on Windows
+      if: matrix.os == 'windows-latest'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -e .
+        pip install -r requirements.txt
+
+    - name: Test with pytest
+      run: |
+        pytest tests/
