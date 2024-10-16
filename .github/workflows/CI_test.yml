@@ -18,14 +18,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Configure Git to ignore Zone.Identifier
-      run: |
-        git config --global core.safecrlf false
-        git config --global core.autocrlf false
-      shell: cmd
-
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
