@@ -18,10 +18,11 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Remove Zone.Identifier
+    - name: Remove Zone.Identifier streams
       run: |
-        dir /s /b | where {$_.endswith(":Zone.Identifier")} | foreach { Remove-Item $_ }
-      shell: powershell
+        Get-ChildItem -Recurse -Stream Zone.Identifier -ErrorAction SilentlyContinue | 
+        ForEach-Object { Remove-Item $_.FileName -Stream Zone.Identifier }
+      shell: pwsh
 
 
     - name: Checkout code
