@@ -18,10 +18,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-    - name: Remove Zone.Identifier streams
+    - name: Remove Zone.Identifier files manually
       run: |
-        Get-ChildItem -Recurse -Stream Zone.Identifier -ErrorAction SilentlyContinue | 
-        ForEach-Object { Remove-Item $_.FileName -Stream Zone.Identifier }
+        Get-ChildItem -Recurse | Where-Object { $_.Name -like '*:Zone.Identifier*' } | Remove-Item -Force
       shell: pwsh
 
 
